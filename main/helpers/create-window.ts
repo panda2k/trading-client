@@ -18,7 +18,6 @@ export default (
         height: options.height,
     };
     let state = {};
-    let win: BrowserWindow;
 
     const restore = () => store.get(key, defaultSize);
 
@@ -80,7 +79,7 @@ export default (
             ...options.webPreferences,
         },
     };
-    win = new BrowserWindow(browserOptions);
+    const win = new BrowserWindow(browserOptions);
 
     win.on("close", saveState);
 
