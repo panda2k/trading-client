@@ -4,12 +4,12 @@ import { instance as api } from "../utils/ironbeam/api";
 const Login = () => {
     const [username, setUsername] = useState(api.getUsername());
     const [password, setPassword] = useState("");
-
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         api.setUsername(username);
         api.setPassword(password);
         api.connect(() => {
+            console.log("Connected");
         });
     };
 

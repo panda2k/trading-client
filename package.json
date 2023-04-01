@@ -9,7 +9,7 @@
     "dev": "nextron",
     "build": "nextron build",
     "postinstall": "electron-builder install-app-deps",
-    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts ."
+    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts,.tsx,.jsx ."
   },
   "dependencies": {
     "@types/d3": "^7.4.0",

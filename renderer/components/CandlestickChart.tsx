@@ -1,4 +1,16 @@
-import { axisBottom, axisLeft, map, max, min, range, scaleBand, scaleLinear, scaleUtc, utcDays, utcFormat } from "d3";
+import {
+    axisBottom,
+    axisLeft,
+    map,
+    max,
+    min,
+    range,
+    scaleBand,
+    scaleLinear,
+    scaleUtc,
+    utcDays,
+    utcFormat
+} from "d3";
 
 /**
  * Creates a candle stick chart
@@ -25,7 +37,7 @@ export default (data: Candlestick[], {
     const yLow = map(data, d => d.low);
     const I = range(xOpen.length);
 
-    const xDomain = utcDays(min(xOpen), max(xClose));
+    /*const xDomain = utcDays(min(xOpen), max(xClose));
     const yDomain = [min(yLow), max(yHigh)];
 
     const xScale = scaleBand(xDomain, xRange).padding(xPadding);
@@ -34,7 +46,7 @@ export default (data: Candlestick[], {
         .tickFormat(utcFormat(xFormat))
         .tickValues(xTicks);
     const yAxis = axisLeft(yScale).ticks(height / 40, yFormat);
-
+    */
 };
 
 
