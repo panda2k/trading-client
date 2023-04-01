@@ -1,4 +1,31 @@
-import { CurrencyCode, RegCode } from "./enums";
+import { CurrencyCode, MessageType, RegCode } from "./enums";
+
+export type MessageHandler = (message: object) => void
+
+/**
+ * Base messsage info
+ */
+export type BaseMessage = {
+    /**
+     * The message type
+     */
+    MESSAGE: MessageType
+
+    /**
+     * The server side message id
+     */
+    MID: number
+
+    /**
+     * The client side message id
+     */
+    MID_REF: number
+
+    /**
+     * Whether the message is to be continued
+     */
+    TO_BE_CONTINUED: boolean
+}
 
 /**
  * The credentials required to authenticate to XAPI

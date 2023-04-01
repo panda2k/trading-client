@@ -1,15 +1,20 @@
+import { useSetAtom } from "jotai";
 import React, { useState } from "react";
+import { accountUsername } from "../utils/atoms";
 import { instance as api } from "../utils/ironbeam/api";
 
 const Login = () => {
     const [username, setUsername] = useState(api.getUsername());
     const [password, setPassword] = useState("");
+    const setAccountUsername = useSetAtom(accountUsername);
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         api.setUsername(username);
         api.setPassword(password);
         api.connect(() => {
             console.log("Connected");
+            setAccountUsername(username);
         });
     };
 

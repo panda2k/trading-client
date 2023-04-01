@@ -1,6 +1,11 @@
 import * as mqtt from "mqtt";
 import { MqttClient } from "mqtt";
-import { CredentialConfig } from "./types";
+import { AccountBalanceSearch, MessageType } from "./enums";
+import {
+    BaseMessage,
+    CredentialConfig,
+    MessageHandler
+} from "./types";
 
 export default class IronbeamApi {
     /**
@@ -40,6 +45,26 @@ export default class IronbeamApi {
     private client: MqttClient;
 
     /**
+     * Message counter used for MID field
+     */
+    private messageCount: number;
+
+    /**
+     * Client topic string
+     */
+    private clientTopic = "";
+
+    /**
+     * Server topic string
+     */
+    private serverTopic = "";
+
+    /**
+     * MQTT message handlers
+     */
+    private messageHandlers: Map<number, MessageHandler>;
+
+    /**
      * Default constructor for initializing an API instance 
      * 
      * @param {string=} username - the IronBeam account number 
@@ -58,6 +83,8 @@ export default class IronbeamApi {
         this.config.operatorID = operatorId;
         this.config.operatorPassword = operatorPassword;
         this.client = mqtt.connect("");
+        this.messageCount = 0;
+        this.messageHandlers = new Map();
     }
 
     /** 
@@ -80,10 +107,11 @@ export default class IronbeamApi {
         });
 
         this.client.on("connect", () => {
-            console.log("Connected");
-            this.client.subscribe(`CLIENT/${this.config.uniqueID}`);
+            this.client.subscribe(this.clientTopic);
             onConnect();
         });
+
+        this.client.on("message", this.handleMessage);
     }
 
     /**
@@ -97,6 +125,25 @@ export default class IronbeamApi {
         // stolen from IronBeam API implementation
         this.config.uniqueID = `${this.config.username}_` +
             Math.random().toString(16).substr(2, 8);
+
+        this.clientTopic = `CLIENT/${this.config.uniqueID}`;
+        this.serverTopic = `SERVER/${this.config.uniqueID}`;
+    }
+
+    /**
+     * Gets the account balance
+     */
+    public getAccountBalance(handler: MessageHandler): void {
+        const messageId = this.getMessageId();
+        const message = {
+            MESSAGE: MessageType.GET_ACCOUNT_BALANCE,
+            MID: messageId,
+            ACCOUNT: this.getUsername(),
+            TYPE: AccountBalanceSearch.CURRENT_OPEN
+        };
+
+        this.messageHandlers.set(messageId, handler);
+        this.client.publish(this.serverTopic, JSON.stringify(message));
     }
 
 
@@ -126,6 +173,31 @@ export default class IronbeamApi {
     public isConnected(): boolean {
         return this.client?.connected;
     }
+
+    /**
+     * Gets a new message id
+     *
+     * @returns {number} the message id to use 
+     */
+    private getMessageId(): number {
+        return this.messageCount++;
+    }
+
+    /**
+     * Handles a message reception
+     * Is an arrow function so it can be passed as callback and access 
+     * messageHandlers 
+     */
+    private handleMessage = (topic: string, message: Buffer): void => {
+        const data = JSON.parse(message.toString()) as unknown as BaseMessage;
+        const handler = this.messageHandlers.get(data.MID_REF);
+
+        if (handler) {
+            handler(data);
+            this.messageHandlers.delete(data.MID_REF);
+        }
+    };
+
 }
 
 export const instance = new IronbeamApi();
