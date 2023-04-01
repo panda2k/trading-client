@@ -11,6 +11,7 @@ import {
     utcDays,
     utcFormat
 } from "d3";
+import { Candlestick } from "../types/candlestick";
 
 /**
  * Creates a candle stick chart
