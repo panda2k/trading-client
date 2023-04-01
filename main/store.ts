@@ -1,26 +1,25 @@
-import Store from 'electron-store'
-import { JSONSchemaType } from 'ajv'
+import Store from "electron-store";
+import { JSONSchemaType } from "ajv";
 
 export type SchemaType = {
     username: string
 }
 
 const schema: JSONSchemaType<SchemaType> = {
-    type: 'object',
+    type: "object",
     properties: {
         username: {
-            type: 'string',
+            type: "string",
         }
     },
-    required: ['username']
-}
+    required: ["username"]
+};
 
 export const STORE_KEYS: { [key: string]: keyof SchemaType } = {
-    USERNAME: 'username'
-}
+    USERNAME: "username"
+};
 
-// @ts-ignore
-const store = new Store<SchemaType>({ schema })
+//const store = new Store<SchemaType>({ schema });
 
-export default store
+//export default store;
 

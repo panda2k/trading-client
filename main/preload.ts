@@ -1,8 +1,8 @@
 import { contextBridge, ipcRenderer } from "electron";
 
-contextBridge.exposeInMainWorld('electron', {
+contextBridge.exposeInMainWorld("electron", {
     setUsername: (username: string) =>
-        ipcRenderer.invoke('setUsername', username)
-})
+        ipcRenderer.invoke("setUsername", username)
+});
 
 

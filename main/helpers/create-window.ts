@@ -2,12 +2,15 @@ import {
     screen,
     BrowserWindow,
     BrowserWindowConstructorOptions,
-} from 'electron';
-import Store from 'electron-store';
-import path from 'path';
+} from "electron";
+import Store from "electron-store";
+import path from "path";
 
-export default (windowName: string, options: BrowserWindowConstructorOptions): BrowserWindow => {
-    const key = 'window-state';
+export default (
+    windowName: string,
+    options: BrowserWindowConstructorOptions
+): BrowserWindow => {
+    const key = "window-state";
     const name = `window-state-${windowName}`;
     const store = new Store({ name });
     const defaultSize = {
@@ -15,7 +18,7 @@ export default (windowName: string, options: BrowserWindowConstructorOptions): B
         height: options.height,
     };
     let state = {};
-    let win;
+    const win;
 
     const restore = () => store.get(key, defaultSize);
 
@@ -79,7 +82,7 @@ export default (windowName: string, options: BrowserWindowConstructorOptions): B
     };
     win = new BrowserWindow(browserOptions);
 
-    win.on('close', saveState);
+    win.on("close", saveState);
 
     return win;
 };

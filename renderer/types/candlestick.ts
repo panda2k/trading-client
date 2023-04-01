@@ -2,22 +2,22 @@ type Candlestick = {
     /**
      * Opening price of candle
      */
-    open: Number
+    open: number
 
     /**
      * Closing price of candle
      */
-    close: Number
+    close: number
 
     /**
      * Highest price of candle
      */
-    high: Number
+    high: number
 
     /**
      * Lowest price of candle
      */
-    low: Number
+    low: number
 
     /**
      * Open time of candle
@@ -32,7 +32,7 @@ type Candlestick = {
     /**
      * Volume of candle
      */
-    volume: Number
+    volume: number
 }
 
 

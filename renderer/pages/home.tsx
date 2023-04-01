@@ -1,8 +1,8 @@
-import React from 'react';
-import Head from 'next/head';
-import AccountDetail from '../components/AccountDetail';
-import Login from '../components/Login';
-import { instance as api } from '../utils/ironbeam/api'
+import React from "react";
+import Head from "next/head";
+import AccountDetail from "../components/AccountDetail";
+import Login from "../components/Login";
+import { instance as api } from "../utils/ironbeam/api";
 
 const Home = () => {
     return (
