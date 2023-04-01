@@ -2,8 +2,8 @@ name: Sanity check
 on: push
 
 jobs:
-  lint:
-    name: Run Linter
+  sanity-check:
+    name: Sanity Check
     runs-on: ubuntu-latest
     container:
       image: node:latest
@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
-      - name: Running composer install 
-        run: composer install 
       - name: Installing packages
         run: npm install
       - name: Running linter 
