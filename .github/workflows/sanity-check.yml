@@ -6,7 +6,7 @@ jobs:
     name: Run Linter
     runs-on: ubuntu-latest
     container:
-      image: composer:latest
+      image: node:latest
       volumes:
         - ${{ github.workspace }}:/app
     steps:
