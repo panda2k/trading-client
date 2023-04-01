@@ -1,4 +1,4 @@
-type Candlestick = {
+export type Candlestick = {
     /**
      * Opening price of candle
      */
