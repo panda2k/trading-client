@@ -146,7 +146,6 @@ export default class IronbeamApi {
         this.client.publish(this.serverTopic, JSON.stringify(message));
     }
 
-
     /**
      * Sets the config's password
      *
@@ -194,7 +193,9 @@ export default class IronbeamApi {
 
         if (handler) {
             handler(data);
-            this.messageHandlers.delete(data.MID_REF);
+            if (!data.TO_BE_CONTINUED) {
+                this.messageHandlers.delete(data.MID_REF);
+            }
         }
     };
 
